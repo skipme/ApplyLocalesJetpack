@@ -1,0 +1,10 @@
+*.dll
+*.pdb
+*.suo
+*.nupkg
+*.obj
+*.exe
+Thumbs.db
+bin/
+obj/
+TestResults/
