@@ -10,7 +10,7 @@ namespace ApplyLocalesJetpack
     {
         static void Main(string[] args)
         {
-            string defPath = @"C:\Users\USER\Desktop\JENV\addon-sdk-1.15\y-Translate\y-translate.xpi";
+            string defPath = @"some.xpi";
             string defJson = "[{l: 'en-US', name: 'test', description: 'testD'}]";
 
             if (args.Length == 2)
@@ -20,7 +20,7 @@ namespace ApplyLocalesJetpack
             }
             else
             {
-                Console.WriteLine("not enougn arguments");
+                Console.WriteLine("not enough arguments");
                 return;
             }
 
