@@ -48,6 +48,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="updaterdf.cs" />
+    <Compile Include="params.cs" />
     <Compile Include="installrdf.cs" />
     <Compile Include="locales.cs" />
     <Compile Include="Program.cs" />

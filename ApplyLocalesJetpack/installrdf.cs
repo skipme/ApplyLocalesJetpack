@@ -17,14 +17,54 @@ namespace ApplyLocalesJetpack
         }
         public string Take()
         {
-            MemoryStream ms = new MemoryStream();
-            doc.Save(ms);
-            return Encoding.UTF8.GetString(ms.GetBuffer(), 0, (int)ms.Length);
+            using (MemoryStream ms = new MemoryStream())
+            {
+                StreamWriter sw = new StreamWriter(ms, Encoding.UTF8);
+                doc.Save(sw);
+                return Encoding.UTF8.GetString(ms.GetBuffer(), 3, (int)ms.Length-3);// 3 byted BOM for UTF-8
+            }
+        }
+        public string getId()
+        {
+            XmlNode n = getNode(new[] { "RDF", "Description", "em:id" });
+            return n.InnerText;
+        }
+        public string getVer()
+        {
+            XmlNode n = getNode(new[] { "RDF", "Description", "em:version" });
+            return n.InnerText;
         }
         public void pushloc(locales.lObject obj)
         {
             XmlNode n = getNode(new[] { "RDF", "Description" });
             n.AppendChild(CreateNode(obj));
+        }
+        public void pushUpdateUrl(string updateUrl, string homepageUrl = null)
+        {
+            //<em:homepageURL>https://www..../</em:homepageURL>
+            //<em:updateURL>https://...firefox.rdf</em:updateURL>
+            XmlNode n = getNode(new[] { "RDF", "Description" });
+
+            XmlElement elem = doc.CreateElement("em:updateURL", "http://www.mozilla.org/2004/em-rdf#");
+            elem.InnerText = updateUrl;
+
+            n.AppendChild(elem);
+
+            if (homepageUrl != null)
+            {
+                XmlElement elemH = doc.CreateElement("em:homepageURL", "http://www.mozilla.org/2004/em-rdf#");
+                elemH.InnerText = homepageUrl;
+
+                n.AppendChild(elemH);
+            }
+        }
+        public void setMinMaxVer(string minVer, string maxVer)
+        {
+            XmlNode n = getNode(new[] { "RDF", "Description", "em:targetApplication", "Description", "em:minVersion" });
+            n.InnerText = minVer;
+
+            n = getNode(new[] { "RDF", "Description", "em:targetApplication", "Description", "em:maxVersion" });
+            n.InnerText = maxVer;
         }
         public XmlNode CreateNode(locales.lObject lobj)
         {

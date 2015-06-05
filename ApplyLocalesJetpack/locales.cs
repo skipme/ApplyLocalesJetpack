@@ -22,7 +22,7 @@ namespace ApplyLocalesJetpack
             public string name { get; set; }
             public string description { get; set; }
         }
-        public static List<lObject> getLocales(string json)
+        public static List<lObject> get(string json)
         {
             List<lObject> m = JsonConvert.DeserializeObject<List<lObject>>(json);
             return m;
